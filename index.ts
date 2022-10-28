@@ -64,18 +64,18 @@ async function main() {
   // fetchAllUsers();
 
   // createUser({
-  //   name: 'Rich',
-  //   email: 'hello@prisma.com',
+  //   name: 'Hana',
+  //   email: 'hana@prisma.com',
   //   posts: {
   //     create: {
-  //       title: 'My first post',
-  //       body: 'Lots of really interesting stuff',
-  //       slug: 'my-first-post',
+  //       title: 'My first story',
+  //       body: 'Loads of amazing stuff',
+  //       slug: 'my-first-story',
   //     },
   //   },
   // });
 
-  updatePost('my-first-post', ['Great post!', "Can't wait to read more!"]);
+  updatePost('my-first-story', ['Really insane!', "Thi is awesome!"]);
 };
 
 main()
