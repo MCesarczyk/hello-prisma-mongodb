@@ -36,21 +36,46 @@ const createUser = async (user: IUserWithDetails) => {
   console.dir(allUsers, { depth: null });
 };
 
-async function main() {
-  await prisma.$connect();
-  // fetchAllUsers();
-
-  createUser({
-    name: 'Rich',
-    email: 'hello@prisma.com',
-    posts: {
-      create: {
-        title: 'My first post',
-        body: 'Lots of really interesting stuff',
-        slug: 'my-first-post',
+const updatePost = async (newSlug: string, newComments: string[]) => {
+  await prisma.post.update({
+    where: {
+      slug: newSlug,
+    },
+    data: {
+      comments: {
+        createMany: {
+          data: newComments.map(newComment => ({ comment: newComment })),
+        },
       },
     },
+  })
+  const posts = await prisma.post.findMany({
+    include: {
+      comments: true,
+    },
   });
+
+  console.dir(posts, { depth: Infinity });
+};
+
+async function main() {
+  await prisma.$connect();
+
+  // fetchAllUsers();
+
+  // createUser({
+  //   name: 'Rich',
+  //   email: 'hello@prisma.com',
+  //   posts: {
+  //     create: {
+  //       title: 'My first post',
+  //       body: 'Lots of really interesting stuff',
+  //       slug: 'my-first-post',
+  //     },
+  //   },
+  // });
+
+  updatePost('my-first-post', ['Great post!', "Can't wait to read more!"]);
 };
 
 main()
